@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Commands: A Quick Glance Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light background */
+            color: #1a202c; /* Dark text */
+        }
+        .code-block {
+            background-color: #1E293B; /* Dark background for code */
+            color: #E2E8F0; /* Light text for code */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            white-space: pre;
+            word-wrap: normal;
+        }
+        .code-block .keyword { color: #818CF8; }
+        .code-block .function { color: #60A5FA; }
+        .code-block .string { color: #A7F3D0; }
+        .code-block .comment { color: #9CA3AF; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #94A3B8; /* Medium grey for arrows */
+            margin: 0 1rem;
+        }
+        .info-card {
+            background-color: white; /* Light card background */
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Light shadow */
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .main-header {
+            background: linear-gradient(135deg, #3357FF, #FF33A1);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .section-title {
+            font-weight: 900;
+            font-size: 2.25rem;
+            background: -webkit-linear-gradient(45deg, #FF5733, #A133FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subsection-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #3357FF; /* Vibrant blue for subsection titles */
+            margin-bottom: 1rem;
+        }
+        /* Revert specific text overrides for light mode */
+        .text-slate-600 {
+            color: #4a5568; /* Darker grey for body text */
+        }
+        .text-slate-900 {
+            color: #1a202c; /* Very dark for headings */
+        }
+        .bg-slate-200 { /* For the anatomy of query boxes */
+            background-color: #cbd5e0; /* Light grey */
+            color: #1a202c; /* Dark text */
+        }
+        .bg-slate-800 { /* Footer background */
+            background-color: #2d3748; /* Dark grey */
+        }
+        .text-slate-400 { /* Footer text */
+            color: #a0aec0; /* Lighter grey */
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <header class="main-header p-8 text-center mb-12">
+        <h1 class="text-4xl md:text-6xl font-black mb-2">SQL Quick Glance Guide</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto">Your rapid refresher for core SQL commands and concepts. Nail that technical interview!</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
+        <section id="command-categories">
+             <h2 class="section-title text-center mb-8">The Core Language Components</h2>
+             <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">SQL is categorized into several sub-languages, each serving a distinct purpose in database management. Understanding these categories provides a foundational overview of SQL's capabilities.</p>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="info-card text-center">
+                    <div class="text-5xl mb-4">🏗️</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">DDL (Data Definition Language)</h3>
+                    <p class="text-slate-600">Defines and manages the database structure. Think of it as the blueprint for your data.</p>
+                    <div class="mt-4 space-x-2">
+                        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">CREATE</span>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">ALTER</span>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">DROP</span>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">TRUNCATE</span>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">RENAME</span>
+                    </div>
+                </div>
+                <div class="info-card text-center">
+                    <div class="text-5xl mb-4">✍️</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">DML (Data Manipulation Language)</h3>
+                    <p class="text-slate-600">Used to add, modify, and remove the data within the tables. It's how you interact with records.</p>
+                     <div class="mt-4 space-x-2">
+                        <span class="inline-block bg-green-100 text-green-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">INSERT</span>
+                        <span class="inline-block bg-green-100 text-green-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">UPDATE</span>
+                        <span class="inline-block bg-green-100 text-green-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">DELETE</span>
+                    </div>
+                </div>
+                 <div class="info-card text-center">
+                    <div class="text-5xl mb-4">🔍</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">DQL (Data Query Language)</h3>
+                    <p class="text-slate-600">The most common task: retrieving information from the database. This is all about asking questions.</p>
+                    <div class="mt-4 space-x-2">
+                        <span class="inline-block bg-purple-100 text-purple-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-full">SELECT</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ddl-details">
+            <h2 class="section-title text-center mb-8">DDL: Defining Your Database Schema</h2>
+            <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">DDL commands are essential for building and maintaining the structural integrity of your database. They define how data is organized and stored.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="info-card">
+                    <h3 class="subsection-title">CREATE: Building Database Objects</h3>
+                    <p class="text-slate-600 mb-4">The `CREATE` statement establishes new database objects like tables. You define column names, data types, and constraints.</p>
+                    <div class="code-block mb-4">
+<span class="keyword">CREATE TABLE</span> employees (
+    id <span class="function">INT</span> <span class="keyword">AUTO_INCREMENT PRIMARY KEY</span>,
+    first_name <span class="function">VARCHAR</span>(50),
+    last_name <span class="function">VARCHAR</span>(50),
+    hire_date <span class="function">DATE</span>
+);
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">SQL Data Types:</p>
+                    <ul class="list-disc list-inside text-slate-600 text-sm mb-4">
+                        <li><span class="font-semibold">Numeric:</span> <span class="font-mono">INT</span>, <span class="font-mono">DECIMAL</span>, <span class="font-mono">FLOAT</span></li>
+                        <li><span class="font-semibold">Character/String:</span> <span class="font-mono">VARCHAR</span>, <span class="font-mono">CHAR</span></li>
+                        <li><span class="font-semibold">Date/Time:</span> <span class="font-mono">DATE</span>, <span class="font-mono">TIME</span>, <span class="font-mono">DATETIME</span></li>
+                    </ul>
+                    <p class="text-slate-600 mb-2 font-semibold">SQL Constraints:</p>
+                    <ul class="list-disc list-inside text-slate-600 text-sm">
+                        <li><span class="font-semibold">NOT NULL:</span> Ensures a column cannot store NULL.</li>
+                        <li><span class="font-semibold">UNIQUE:</span> All values in a column are distinct.</li>
+                        <li><span class="font-semibold">PRIMARY KEY:</span> Unique identifier for each row (NOT NULL + UNIQUE).</li>
+                        <li><span class="font-semibold">FOREIGN KEY:</span> Links two tables, enforcing referential integrity.</li>
+                        <li><span class="font-semibold">CHECK:</span> Ensures values satisfy a condition.</li>
+                        <li><span class="font-semibold">DEFAULT:</span> Provides a default value if none specified.</li>
+                        <li><span class="font-semibold">INDEX:</span> Speeds up data retrieval.</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="subsection-title">ALTER: Modifying Existing Structures</h3>
+                    <p class="text-slate-600 mb-4">The `ALTER TABLE` statement changes an existing table's structure, like adding or dropping columns and constraints.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Add Column:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">ALTER TABLE</span> employees
+<span class="keyword">ADD</span> department_id <span class="function">INT</span>;
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Drop Column:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">ALTER TABLE</span> employees
+<span class="keyword">DROP COLUMN</span> hire_date;
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Modify Column Type:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">ALTER TABLE</span> employees
+<span class="keyword">MODIFY COLUMN</span> first_name <span class="function">VARCHAR</span>(100);
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Add Foreign Key Constraint:</p>
+                    <div class="code-block">
+<span class="keyword">ALTER TABLE</span> Orders
+<span class="keyword">ADD FOREIGN KEY</span> (PersonID) <span class="keyword">REFERENCES</span> Persons(PersonID);
+                    </div>
+                </div>
+
+                <div class="info-card lg:col-span-2">
+                    <h3 class="subsection-title">DROP, TRUNCATE, RENAME: Managing Table Lifecycle</h3>
+                    <p class="text-slate-600 mb-4">These commands manage the existence and naming of tables.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-slate-600 mb-2 font-semibold">DROP TABLE:</p>
+                            <p class="text-slate-600 text-sm mb-2">Completely removes a table (structure + data).</p>
+                            <div class="code-block mb-4">
+<span class="keyword">DROP TABLE</span> old_employees;
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-slate-600 mb-2 font-semibold">TRUNCATE TABLE:</p>
+                            <p class="text-slate-600 text-sm mb-2">Removes all rows from a table, but keeps the structure. Faster than DELETE for all rows.</p>
+                            <div class="code-block mb-4">
+<span class="keyword">TRUNCATE TABLE</span> temporary_logs;
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">RENAME TABLE:</p>
+                    <div class="code-block">
+<span class="keyword">ALTER TABLE</span> old_table_name
+<span class="keyword">RENAME TO</span> new_table_name;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dml-details">
+            <h2 class="section-title text-center mb-8">DML: Interacting with Your Data</h2>
+            <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">DML commands are used to add, modify, and remove the actual data within your database tables.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="info-card">
+                    <h3 class="subsection-title">INSERT: Adding Data</h3>
+                    <p class="text-slate-600 mb-4">The `INSERT` command adds new rows of data into a table.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Single-row INSERT:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">INSERT INTO</span> employees (first_name, last_name)
+<span class="keyword">VALUES</span> (<span class="string">'Alice'</span>, <span class="string">'Smith'</span>);
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Multi-row INSERT (from another table):</p>
+                    <div class="code-block">
+<span class="keyword">INSERT INTO</span> new_employees (id, first_name)
+<span class="keyword">SELECT</span> employee_id, name
+<span class="keyword">FROM</span> old_employee_records
+<span class="keyword">WHERE</span> status = <span class="string">'Active'</span>;
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="subsection-title">UPDATE: Modifying Data</h3>
+                    <p class="text-slate-600 mb-4">The `UPDATE` statement changes existing data in one or more rows. The `WHERE` clause is crucial to specify which rows to modify.</p>
+                    <div class="code-block">
+<span class="keyword">UPDATE</span> Products
+<span class="keyword">SET</span> Price = Price * <span class="string">1.10</span>, Stock = Stock - <span class="string">5</span>
+<span class="keyword">WHERE</span> Category = <span class="string">'Electronics'</span>;
+                    </div>
+                </div>
+
+                <div class="info-card lg:col-span-2">
+                    <h3 class="subsection-title">DELETE: Removing Data</h3>
+                    <p class="text-slate-600 mb-4">The `DELETE` statement removes rows from a table. Use the `WHERE` clause to specify conditions.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Delete specific rows:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">DELETE FROM</span> Orders
+<span class="keyword">WHERE</span> OrderDate < <span class="string">'2023-01-01'</span>;
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Delete all rows (without WHERE):</p>
+                    <div class="code-block">
+<span class="keyword">DELETE FROM</span> TempTable;
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="dql-core">
+            <h2 class="section-title text-center mb-8">DQL: Mastering Data Retrieval</h2>
+            <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">The `SELECT` statement is the most powerful and frequently used command, allowing you to extract specific data from your database.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="info-card lg:col-span-2">
+                     <h3 class="text-xl font-bold text-slate-900 mb-4 text-center">The Anatomy of a Query</h3>
+                     <p class="text-slate-600 mb-6 text-center max-w-3xl mx-auto">A `SELECT` statement is constructed in a logical order to filter, group, and sort data. While you write it as `SELECT`, `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, the database processes it in a different sequence.</p>
+                     <div class="flex flex-wrap items-center justify-center font-mono text-sm">
+                         <div class="bg-slate-200 p-2 rounded">FROM</div>
+                         <div class="flow-arrow">→</div>
+                         <div class="bg-slate-200 p-2 rounded">WHERE</div>
+                         <div class="flow-arrow">→</div>
+                         <div class="bg-slate-200 p-2 rounded">GROUP BY</div>
+                         <div class="flow-arrow">→</div>
+                         <div class="bg-slate-200 p-2 rounded">HAVING</div>
+                         <div class="flow-arrow">→</div>
+                         <div class="bg-slate-200 p-2 rounded">SELECT</div>
+                         <div class="flow-arrow">→</div>
+                         <div class="bg-slate-200 p-2 rounded">ORDER BY</div>
+                         <div class="flow-arrow">→</div>
+                         <div class="bg-slate-200 p-2 rounded">LIMIT</div>
+                     </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="subsection-title">Basic `SELECT`</h3>
+                    <p class="text-slate-600 mb-4">Retrieve all (`*`) or specific columns from a table.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Select all columns:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers;
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Select specific columns:</p>
+                    <div class="code-block">
+<span class="keyword">SELECT</span> CustomerName, City <span class="keyword">FROM</span> Customers;
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="subsection-title">Filtering with `WHERE`</h3>
+                    <p class="text-slate-600 mb-4">Extract only records that fulfill a specified condition using comparison and logical operators.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Example with comparison operator:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> Price > <span class="string">50</span>;
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Example with logical operator (`AND`):</p>
+                    <div class="code-block">
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Orders
+<span class="keyword">WHERE</span> OrderDate >= <span class="string">'2024-01-01'</span> <span class="keyword">AND</span> TotalAmount > <span class="string">100</span>;
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="subsection-title">Sorting with `ORDER BY`</h3>
+                    <p class="text-slate-600 mb-4">Sort the result-set in ascending (`ASC`, default) or descending (`DESC`) order by one or more columns.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Sort by one column descending:</p>
+                    <div class="code-block mb-4">
+<span class="keyword">SELECT</span> ProductName <span class="keyword">FROM</span> Products <span class="keyword">ORDER BY</span> ProductName <span class="keyword">DESC</span>;
+                    </div>
+                    <p class="text-slate-600 mb-2 font-semibold">Sort by multiple columns:</p>
+                    <div class="code-block">
+<span class="keyword">SELECT</span> City, CustomerName <span class="keyword">FROM</span> Customers
+<span class="keyword">ORDER BY</span> City <span class="keyword">ASC</span>, CustomerName <span class="keyword">ASC</span>;
+                    </div>
+                </div>
+
+                <div class="info-card">
+                     <h3 class="subsection-title">Limiting Results (`LIMIT`/`TOP`)</h3>
+                     <p class="text-slate-600 mb-4">Restrict the number of rows returned by a query, useful for pagination or top N results.</p>
+                     <p class="text-slate-600 mb-2 font-semibold">`LIMIT` (MySQL/PostgreSQL):</p>
+                     <div class="code-block mb-4">
+<span class="keyword">SELECT</span> ProductName <span class="keyword">FROM</span> Products
+<span class="keyword">ORDER BY</span> Price <span class="keyword">DESC LIMIT</span> <span class="string">10</span>;
+                     </div>
+                     <p class="text-slate-600 mb-2 font-semibold">`TOP` (SQL Server):</p>
+                     <div class="code-block">
+<span class="keyword">SELECT TOP</span> <span class="string">5</span> CustomerName <span class="keyword">FROM</span> Customers
+<span class="keyword">ORDER BY</span> CustomerID <span class="keyword">DESC</span>;
+                     </div>
+                </div>
+
+                <div class="info-card lg:col-span-2">
+                    <h3 class="subsection-title">Aggregate Functions and Grouping</h3>
+                    <p class="text-slate-600 mb-4">Aggregate functions perform calculations on a set of rows, returning a single summary value. `GROUP BY` groups rows with identical values for aggregation, and `HAVING` filters these groups.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Common Aggregate Functions:</p>
+                    <ul class="list-disc list-inside text-slate-600 text-sm mb-4">
+                        <li><span class="font-mono">COUNT()</span>: Number of rows.</li>
+                        <li><span class="font-mono">SUM()</span>: Total sum of numeric values.</li>
+                        <li><span class="font-mono">AVG()</span>: Average of numeric values.</li>
+                        <li><span class="font-mono">MIN()</span>: Lowest value.</li>
+                        <li><span class="font-mono">MAX()</span>: Highest value.</li>
+                    </ul>
+                    <p class="text-slate-600 mb-2 font-semibold">Example with `GROUP BY` and `HAVING`:</p>
+                    <div class="code-block">
+<span class="keyword">SELECT</span> Country, <span class="function">COUNT</span>(CustomerID) <span class="keyword">AS</span> CustomerCount
+<span class="keyword">FROM</span> Customers
+<span class="keyword">GROUP BY</span> Country
+<span class="keyword">HAVING</span> <span class="function">COUNT</span>(CustomerID) > <span class="string">5</span>;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="joins">
+            <h2 class="section-title text-center mb-8">JOINs: Combining Tables</h2>
+            <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">JOINS are fundamental to relational databases, allowing you to retrieve data from multiple tables in a single query based on related columns.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="info-card">
+                    <h3 class="text-lg font-bold text-center mb-2">INNER JOIN</h3>
+                    <div class="flex justify-center items-center space-x-1 h-24">
+                        <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-200/50"></div>
+                        <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-200/50 -ml-8 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2 text-center">Returns records that have matching values in both tables.</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="text-lg font-bold text-center mb-2">LEFT JOIN</h3>
+                    <div class="flex justify-center items-center space-x-1 h-24">
+                        <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-300"></div>
+                         <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-200/50 -ml-8 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2 text-center">Returns all records from the left table, and the matched records from the right table.</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="text-lg font-bold text-center mb-2">RIGHT JOIN</h3>
+                     <div class="flex justify-center items-center space-x-1 h-24">
+                        <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-200/50"></div>
+                         <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-300 -ml-8 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2 text-center">Returns all records from the right table, and the matched records from the left table.</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="text-lg font-bold text-center mb-2">FULL OUTER JOIN</h3>
+                    <div class="flex justify-center items-center space-x-1 h-24">
+                         <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-300"></div>
+                         <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-300 -ml-8 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2 text-center">Returns all records when there is a match in either left or right table.</p>
+                </div>
+            </div>
+             <div class="info-card mt-8 lg:col-span-4">
+                <p class="text-slate-600 mb-4">Example of an `INNER JOIN` to get order information along with customer names.</p>
+                <div class="code-block">
+<span class="keyword">SELECT</span> Orders.OrderID, Customers.CustomerName
+<span class="keyword">FROM</span> Orders
+<span class="keyword">INNER JOIN</span> Customers <span class="keyword">ON</span> Orders.CustomerID = Customers.CustomerID;
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced-sql">
+            <h2 class="section-title text-center mb-8">Advanced SQL Constructs</h2>
+            <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">Beyond basic operations, these constructs enable more sophisticated data retrieval and manipulation, crucial for complex problem-solving.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <div class="info-card">
+                    <h3 class="subsection-title">Subqueries (Nested Queries)</h3>
+                    <p class="text-slate-600 mb-4">A query embedded within another SQL query. They are powerful for complex filtering or when criteria depend on another query's result.</p>
+                    <p class="text-slate-600 mb-2 font-semibold">Example: Products more expensive than average:</p>
+                    <div class="code-block">
+<span class="keyword">SELECT</span> ProductName, Price
+<span class="keyword">FROM</span> Products
+<span class="keyword">WHERE</span> Price > (<span class="keyword">SELECT AVG</span>(Price) <span class="keyword">FROM</span> Products);
+                    </div>
+                </div>
+                 <div class="info-card">
+                    <h3 class="subsection-title">CTEs (Common Table Expressions)</h3>
+                    <p class="text-slate-600 mb-4">A temporary, named result set defined using the `WITH` clause. Improves readability, modularity, and allows for recursive queries.</p>
+                     <p class="text-slate-600 mb-2 font-semibold">Example: Products in 'Beverages' category using CTE:</p>
+                     <div class="code-block">
+<span class="keyword">WITH</span> BeverageCategories <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span> CategoryID <span class="keyword">FROM</span> Categories
+    <span class="keyword">WHERE</span> CategoryName = <span class="string">'Beverages'</span>
+)
+<span class="keyword">SELECT</span> ProductName <span class="keyword">FROM</span> Products
+<span class="keyword">WHERE</span> CategoryID <span class="keyword">IN</span> (<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> BeverageCategories);
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="performance">
+            <h2 class="section-title text-center mb-8">Performance & Best Practices</h2>
+            <p class="text-center text-slate-600 max-w-4xl mx-auto mb-10">Optimizing SQL queries is crucial for building scalable and efficient applications. Understanding how databases execute queries and applying best practices can dramatically improve performance.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                 <div class="info-card">
+                    <h3 class="subsection-title">The Power of Indexing</h3>
+                    <p class="text-slate-600 mb-4">Indexes are crucial for performance. They allow the database to find data quickly without scanning the entire table, much like a book's index. Notice the dramatic improvement in query time.</p>
+                    <div class="chart-container">
+                        <canvas id="indexingChart"></canvas>
+                    </div>
+                    <p class="text-slate-600 mt-4 text-sm">
+                        <span class="font-semibold">Types of Indexes:</span> Clustered (physical order), Non-Clustered (separate structure), Composite (multiple columns), Covering (all query columns).
+                        <span class="font-semibold">Trade-offs:</span> Faster reads, but slower writes (INSERT/UPDATE/DELETE) due to index maintenance.
+                    </p>
+                 </div>
+
+                <div class="info-card space-y-4">
+                     <h3 class="subsection-title">Query Tuning Quick Wins</h3>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-green-500 text-2xl font-bold">✓</div>
+                        <div>
+                            <h4 class="font-semibold">Be Specific with `SELECT`</h4>
+                            <p class="text-slate-600 text-sm">Avoid `SELECT *`. Only request the columns you actually need. This reduces data transfer and enables index-only scans.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start space-x-4">
+                        <div class="text-green-500 text-2xl font-bold">✓</div>
+                        <div>
+                            <h4 class="font-semibold">Use Sargable Predicates</h4>
+                            <p class="text-slate-600 text-sm">Conditions in `WHERE` clauses that allow the database to use an index efficiently. Avoid functions on indexed columns.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start space-x-4">
+                        <div class="text-red-500 text-2xl font-bold">✗</div>
+                        <div>
+                            <h4 class="font-semibold">Avoid `WHERE YEAR(order_date) = 2024`</h4>
+                            <p class="text-slate-600 text-sm">Instead, use: `WHERE order_date >= '2024-01-01' AND order_date < '2025-01-01'`</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start space-x-4">
+                        <div class="text-green-500 text-2xl font-bold">✓</div>
+                        <div>
+                            <h4 class="font-semibold">`JOIN`s over Complex Subqueries</h4>
+                            <p class="text-slate-600 text-sm">When possible, use `JOIN`s. They are often more efficient as the database optimizer is better at handling them.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-green-500 text-2xl font-bold">✓</div>
+                        <div>
+                            <h4 class="font-semibold">Batch Operations</h4>
+                            <p class="text-slate-600 text-sm">For large `DELETE`/`UPDATE` operations, perform them in smaller batches to prevent long-running transactions and locking.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start space-x-4">
+                        <div class="text-green-500 text-2xl font-bold">✓</div>
+                        <div>
+                            <h4 class="font-semibold">Schema Design (Normalization vs. Denormalization)</h4>
+                            <p class="text-slate-600 text-sm">Normalize for data integrity and efficient writes; denormalize for faster reads in specific analytical scenarios.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center p-8 mt-16 bg-slate-800 text-slate-400">
+        <p>This infographic was generated to provide a quick, visual reference for SQL interview preparation.</p>
+        <p class="text-sm mt-1">Good luck with your interviews!</p>
+    </footer>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const wrapLabel = (label, maxLength = 16) => {
+            if (label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const indexingChartCtx = document.getElementById('indexingChart').getContext('2d');
+        new Chart(indexingChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Query on Large Table Without Index', 'Same Query With Index Added'],
+                datasets: [{
+                    label: 'Query Execution Time (ms)',
+                    data: [2540, 52],
+                    backgroundColor: [
+                        '#FF5733', 
+                        '#33FF57'
+                    ],
+                    borderColor: [
+                        '#FF5733',
+                        '#33FF57'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Time in Milliseconds (ms)',
+                            color: '#1a202c' /* Dark color for axis title */
+                        },
+                        ticks: {
+                            color: '#4a5568' /* Dark color for axis ticks */
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' /* Lighter grid lines */
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#4a5568' /* Dark color for axis ticks */
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' /* Lighter grid lines */
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                           title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

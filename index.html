@@ -96,6 +96,40 @@
         .text-slate-400 { /* Footer text */
             color: #a0aec0; /* Lighter grey */
         }
+        .join-diagram-container {
+            position: relative;
+            width: 120px;
+            height: 80px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .join-circle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 9999px; /* Tailwind's rounded-full */
+            border-width: 2px; /* Tailwind's border-2 */
+        }
+        .circle-left {
+            left: 20px;
+            z-index: 10;
+        }
+        .circle-right {
+            right: 20px;
+            z-index: 20;
+        }
+        .inner-join-overlap {
+            position: absolute;
+            width: 60px; /* Adjust based on overlap */
+            height: 60px;
+            border-radius: 9999px;
+            background-color: rgba(129, 140, 248, 0.7); /* Blend color */
+            z-index: 30;
+            /* Using clip-path for more precise overlap if needed, but for simple visual, just overlap */
+            /* For a true intersection visual, might need more complex CSS or a third element */
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -366,7 +400,7 @@
                     <ul class="list-disc list-inside text-slate-600 text-sm mb-4">
                         <li><span class="font-mono">COUNT()</span>: Number of rows.</li>
                         <li><span class="font-mono">SUM()</span>: Total sum of numeric values.</li>
-                        <li><span class="font-mono">AVG()</span>: Average of numeric values.</li>
+                        <li><span class="font-mono">AVG()</span>: Computes the average of a set of numeric values.</li>
                         <li><span class="font-mono">MIN()</span>: Lowest value.</li>
                         <li><span class="font-mono">MAX()</span>: Highest value.</li>
                     </ul>
@@ -388,49 +422,34 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="info-card">
                     <h3 class="text-lg font-bold text-center mb-2">INNER JOIN</h3>
-                    <div class="flex justify-center items-center space-x-1 h-24">
-                        <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-200/50"></div>
-                        <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-200/50 -ml-8 relative">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
-                            </div>
-                        </div>
+                    <div class="join-diagram-container">
+                        <div class="join-circle circle-left border-blue-500 bg-blue-300/70"></div>
+                        <div class="join-circle circle-right border-pink-500 bg-pink-300/70"></div>
+                        <div class="inner-join-overlap join-circle"></div>
                     </div>
                     <p class="text-sm text-slate-600 mt-2 text-center">Returns records that have matching values in both tables.</p>
                 </div>
                 <div class="info-card">
                     <h3 class="text-lg font-bold text-center mb-2">LEFT JOIN</h3>
-                    <div class="flex justify-center items-center space-x-1 h-24">
-                        <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-300"></div>
-                         <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-200/50 -ml-8 relative">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
-                            </div>
-                        </div>
+                    <div class="join-diagram-container">
+                        <div class="join-circle circle-left border-blue-500 bg-blue-300"></div>
+                        <div class="join-circle circle-right border-pink-500 bg-pink-300/30"></div>
                     </div>
                     <p class="text-sm text-slate-600 mt-2 text-center">Returns all records from the left table, and the matched records from the right table.</p>
                 </div>
                 <div class="info-card">
                     <h3 class="text-lg font-bold text-center mb-2">RIGHT JOIN</h3>
-                     <div class="flex justify-center items-center space-x-1 h-24">
-                        <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-200/50"></div>
-                         <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-300 -ml-8 relative">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
-                            </div>
-                        </div>
+                     <div class="join-diagram-container">
+                        <div class="join-circle circle-left border-blue-500 bg-blue-300/30"></div>
+                        <div class="join-circle circle-right border-pink-500 bg-pink-300"></div>
                     </div>
                     <p class="text-sm text-slate-600 mt-2 text-center">Returns all records from the right table, and the matched records from the left table.</p>
                 </div>
                 <div class="info-card">
                     <h3 class="text-lg font-bold text-center mb-2">FULL OUTER JOIN</h3>
-                    <div class="flex justify-center items-center space-x-1 h-24">
-                         <div class="w-16 h-16 rounded-full border-4 border-blue-500 bg-blue-300"></div>
-                         <div class="w-16 h-16 rounded-full border-4 border-pink-500 bg-pink-300 -ml-8 relative">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-8 h-16 bg-purple-400" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
-                            </div>
-                        </div>
+                    <div class="join-diagram-container">
+                         <div class="join-circle circle-left border-blue-500 bg-blue-300"></div>
+                         <div class="join-circle circle-right border-pink-500 bg-pink-300"></div>
                     </div>
                     <p class="text-sm text-slate-600 mt-2 text-center">Returns all records when there is a match in either left or right table.</p>
                 </div>
